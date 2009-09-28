@@ -1,6 +1,6 @@
 require 'rubygems'
 require 'spec'
-require './subtitle'
+require './lib/subtitle'
 
 describe Subtitle do
 
@@ -22,6 +22,15 @@ describe Subtitle do
 
   it "should add miliseconds" do
     srt = Subtitle.new('specs/sample.srt')
+    srt.add('2,500')
+    srt[0].start_time.should == '01:31:53,710'
+    srt[0].end_time.should == '01:31:57,393'
+    srt[1].start_time.should == '01:31:57,428'
+    srt[1].end_time.should == '01:32:00,164'
+  end
+
+  it "should convert seconds to miliseconds" do
+    Subtitle.convert_to_seconds('12:12:12,100').should == 43932.1
   end
 
 end
