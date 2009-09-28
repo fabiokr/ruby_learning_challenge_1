@@ -31,6 +31,9 @@ describe Subtitle do
 
   it "should convert seconds to miliseconds" do
     Subtitle.convert_to_seconds('12:12:12,100').should == 43932.1
+    Subtitle.convert_to_seconds('1,2').should == 1.2
+    Subtitle.convert_to_seconds('1,21').should == 1.21
+    Subtitle.convert_to_seconds('1,212').should == 1.212
   end
 
 end

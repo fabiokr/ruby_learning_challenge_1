@@ -17,6 +17,14 @@ class Subtitle
     @data.each {|block| add_miliseconds(block, time)}
   end
 
+  def save(output)
+    content = ''
+    @data.each {|block| content << "#{block.line}\n#{block.start_time} --> #{block.end_time}\n#{block.text}\n"}
+    file = File.new(output, "w+")
+    file.syswrite(content)
+    file.close
+  end
+
   private
 
   COMPLETE_TIME = '00:00:00,000'
@@ -49,6 +57,11 @@ class Subtitle
 
   def self.convert_to_seconds(value)
     #fills value with the missing parts (ex. '12,500' becomes 00:00:12,500)
+    if value.size <= 4
+      until value.size == 5
+        value << '0'
+      end
+    end
     complete = COMPLETE_TIME[0...(COMPLETE_TIME.size-value.size)] + value.to_s
     hour, minutes, seconds, miliseconds = complete[0..1].to_i*60*60, complete[3..4].to_i*60, complete[6..7].to_i, complete[9..11].to_i
     (hour+minutes+seconds)+("0.#{miliseconds}").to_f
