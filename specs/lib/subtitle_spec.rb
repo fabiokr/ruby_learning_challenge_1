@@ -1,6 +1,6 @@
 require 'rubygems'
 require 'spec'
-require './lib/subtitle'
+require '././lib/subtitle'
 
 describe Subtitle do
 
